@@ -29,6 +29,16 @@ namespace Infrastructure
                 .HasIndex(p => new { p.ManufactureEmail, p.ProduceDate })
                 .IsUnique();
 
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(u => u.FirstName).HasMaxLength(50);
+                entity.Property(u => u.LastName).HasMaxLength(50);
+                entity.Property(u => u.Username).HasMaxLength(30);
+                entity.Property(u => u.Password).HasMaxLength(30);
+                entity.Property(u => u.Email).HasMaxLength(50);
+                entity.Property(u => u.PhoneNumber).HasMaxLength(20);
+            });
         }
 
     }
