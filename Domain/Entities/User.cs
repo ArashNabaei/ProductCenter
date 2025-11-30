@@ -20,5 +20,7 @@ namespace Domain.Entities
 
         public string PhoneNumber { get; set; }
 
+        public List<Product> Products { get; set; }
+
     }
 }
