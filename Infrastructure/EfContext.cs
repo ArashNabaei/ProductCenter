@@ -19,6 +19,12 @@ namespace Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.Products)
+                .HasForeignKey(p => p.Id)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
 
     }
