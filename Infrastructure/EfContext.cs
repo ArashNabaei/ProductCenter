@@ -6,7 +6,7 @@ namespace Infrastructure
 {
     public class EfContext : DbContext
     {
-        
+
         public EfContext(DbContextOptions<EfContext> options) : base(options)
         {
         }
@@ -24,6 +24,10 @@ namespace Infrastructure
                 .WithMany(u => u.Products)
                 .HasForeignKey(p => p.Id)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Product>()
+                .HasIndex(p => new { p.ManufactureEmail, p.ProduceDate })
+                .IsUnique();
 
         }
 
