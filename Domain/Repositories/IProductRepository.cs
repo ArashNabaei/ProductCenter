@@ -10,9 +10,11 @@ namespace Domain.Repositories
 
         Task<List<Product>> GetProducts(int userId);
 
-        Task<List<Product>> GetProducts();
+        List<Product> GetProducts();
 
-        Task CreateProduct(int userId);
+        Task<List<Product>> GetProductsFilteredByUser(int userId);
+
+        Task CreateProduct(int userId, string name);
 
         Task DeleteProduct(int userId, int productId);
 
