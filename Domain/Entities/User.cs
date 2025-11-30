@@ -14,8 +14,6 @@ namespace Domain.Entities
 
         public string Password { get; set; }
 
-        public string Bio { get; set; }
-
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
