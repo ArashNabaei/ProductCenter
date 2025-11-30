@@ -32,9 +32,14 @@ namespace Application.Services.Accounts
             throw new NotImplementedException();
         }
 
-        public Task<int> ValidateUser(string username, string password)
+        public async Task<int> ValidateUser(string username, string password)
         {
-            throw new NotImplementedException();
+            var user = await _accountRepository.GetUserByUsernameAndPassword(username, password);
+
+            if (user == null)
+                throw new Exception("There is no user with with these information.");
+
+            return user.Id;
         }
     }
 }
