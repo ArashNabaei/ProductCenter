@@ -25,19 +25,24 @@ namespace Infrastructure
                 .HasForeignKey(p => p.Id)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Product>()
-                .HasIndex(p => new { p.ManufactureEmail, p.ProduceDate })
-                .IsUnique();
-
-
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(u => u.FirstName).HasMaxLength(50);
                 entity.Property(u => u.LastName).HasMaxLength(50);
-                entity.Property(u => u.Username).HasMaxLength(30);
-                entity.Property(u => u.Password).HasMaxLength(30);
+                entity.Property(u => u.Username).HasMaxLength(30).IsRequired();
+                entity.Property(u => u.Password).HasMaxLength(30).IsRequired();
                 entity.Property(u => u.Email).HasMaxLength(50);
                 entity.Property(u => u.PhoneNumber).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.Property(p => p.Name).HasMaxLength(50).IsRequired();
+                entity.Property(p => p.ManufacturePhone).HasMaxLength(20);
+                entity.Property(p => p.ManufactureEmail).HasMaxLength(50);
+
+                entity.HasIndex(p => new { p.ManufactureEmail, p.ProduceDate })
+                      .IsUnique();
             });
         }
 
