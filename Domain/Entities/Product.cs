@@ -6,6 +6,8 @@ namespace Domain.Entities
 
         public int Id { get; set; }
 
+        public int UserId { get; set; }
+
         public string Name { get; set; }
 
         public DateTime ProduceDate { get; set; }
