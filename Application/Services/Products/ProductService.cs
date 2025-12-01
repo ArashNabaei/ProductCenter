@@ -45,9 +45,9 @@ namespace Application.Services.Products
             return productsDto;
         }
 
-        public  List<ProductDto> GetProducts()
+        public async Task<List<ProductDto>> GetProducts()
         {
-            var products =  _productRepository.GetProducts();
+            var products = await _productRepository.GetProducts();
 
             var productsDto = _mapper.Map<List<ProductDto>>(products);
 

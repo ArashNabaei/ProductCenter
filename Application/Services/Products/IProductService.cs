@@ -10,7 +10,7 @@ namespace Application.Services.Products
 
         Task<List<ProductDto>> GetProducts(int userId);
 
-        List<ProductDto> GetProducts();
+        Task<List<ProductDto>> GetProducts();
 
         Task CreateProduct(int userId, string productName);
 
