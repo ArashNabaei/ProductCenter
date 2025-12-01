@@ -4,17 +4,17 @@ using MediatR;
 
 namespace Application.Features.Users.Queries
 {
-    public class GetUserByUsernameQueryHandler : IRequestHandler <GetUserByUsernameQuery>
+    public class GetUserQueryHandler : IRequestHandler <GetUserQuery>
     {
 
         private readonly IAccountService _accountService;
 
-        public GetUserByUsernameQueryHandler(IAccountService accountService)
+        public GetUserQueryHandler(IAccountService accountService)
         {
             _accountService = accountService;
         }
 
-        public async Task Handle(GetUserByUsernameQuery request, CancellationToken cancellationToken)
+        public async Task Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

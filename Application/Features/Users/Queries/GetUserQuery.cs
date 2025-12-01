@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Features.Users.Queries
 {
-    public record GetUserByUsernameQuery(string Username) : IRequest
+    public record GetUserQuery(string Username, string Password) : IRequest
     {
 
     }
