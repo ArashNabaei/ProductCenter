@@ -1,6 +1,7 @@
 ﻿
 using Application.Dtos;
 using AutoMapper;
+using Domain.Entities;
 using Domain.Repositories;
 
 namespace Application.Services.Products
@@ -63,9 +64,11 @@ namespace Application.Services.Products
             await _productRepository.DeleteProduct(userId, productId);
         }
 
-        public Task UpdateProduct(int userId, int productId, ProductDto productDto)
+        public async Task UpdateProduct(int userId, int productId, ProductDto productDto)
         {
-            throw new NotImplementedException();
+            var product = _mapper.Map<Product>(productDto);
+
+            await _productRepository.UpdateProduct(userId, productId, product);
         }
     }
 }
