@@ -32,9 +32,9 @@ namespace Infrastructure.Repositories
             return products;
         }
 
-        public List<Product> GetProducts()
+        public async Task<List<Product>> GetProducts()
         {
-            var products =  _efcontext.Products.AsNoTracking().ToList();
+            var products = await  _efcontext.Products.AsNoTracking().ToListAsync();
 
             return products;
         }
