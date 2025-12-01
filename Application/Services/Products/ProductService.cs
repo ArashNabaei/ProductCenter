@@ -44,9 +44,13 @@ namespace Application.Services.Products
             return productsDto;
         }
 
-        public List<ProductDto> GetProducts()
+        public  List<ProductDto> GetProducts()
         {
-            throw new NotImplementedException();
+            var products =  _productRepository.GetProducts();
+
+            var productsDto = _mapper.Map<List<ProductDto>>(products);
+
+            return productsDto;
         }
 
         public Task<List<ProductDto>> GetProductsFilteredByUser(int userId)
