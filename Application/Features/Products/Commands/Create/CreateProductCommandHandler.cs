@@ -1,8 +1,7 @@
-﻿
-using Application.Services.Products;
+﻿using Application.Services.Products;
 using MediatR;
 
-namespace Application.Features.Products.Commands
+namespace Application.Features.Products.Commands.Create
 {
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
     {
