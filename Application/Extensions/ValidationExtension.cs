@@ -11,6 +11,7 @@ namespace Application.Extensions
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
             services.AddTransient<IValidator<SignUpCommand>, SignUpCommandValidator>();
+            services.AddTransient<IValidator<SignInCommand>,  SignInCommandValidator>();
 
             return services;
         }
