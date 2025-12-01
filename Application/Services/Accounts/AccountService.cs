@@ -1,5 +1,6 @@
 ﻿
 using Application.Dtos;
+using AutoMapper;
 using Domain.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -16,10 +17,13 @@ namespace Application.Services.Accounts
 
         private readonly IConfiguration _configuration;
 
-        public AccountService(IAccountRepository accountRepository, IConfiguration configuration)
+        private readonly IMapper _mapper;
+
+        public AccountService(IAccountRepository accountRepository, IConfiguration configuration, IMapper mapper)
         {
             _accountRepository = accountRepository;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
         public async Task CreateUser(AccountDto user)
@@ -64,5 +68,15 @@ namespace Application.Services.Accounts
 
             return user.Id;
         }
+
+        public async Task<AccountDto> GetUserByUsernameAndPassword(string username, string password)
+        {
+            var user = await _accountRepository.GetUserByUsernameAndPassword(username, password);
+
+            var userDto = _mapper.Map<AccountDto> (user);
+
+            return userDto;
+        }
+
     }
 }
