@@ -59,16 +59,6 @@ namespace Application.Services.Accounts
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<int> ValidateUser(string username, string password)
-        {
-            var user = await _accountRepository.GetUserByUsernameAndPassword(username, password);
-
-            if (user == null)
-                throw new Exception("There is no user with with these information.");
-
-            return user.Id;
-        }
-
         public async Task<AccountDto> GetUserByUsernameAndPassword(string username, string password)
         {
             var user = await _accountRepository.GetUserByUsernameAndPassword(username, password);

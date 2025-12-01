@@ -10,8 +10,6 @@ namespace Application.Services.Accounts
 
         string GenerateToken(int userId);
 
-        Task<int> ValidateUser(string username, string password);
-
         Task<AccountDto> GetUserByUsernameAndPassword(string username, string password);
 
     }
