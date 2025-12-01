@@ -53,14 +53,9 @@ namespace Application.Services.Products
             return productsDto;
         }
 
-        public Task<List<ProductDto>> GetProductsFilteredByUser(int userId)
+        public async Task CreateProduct(int userId, string name)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task CreateProduct(int userId, string name)
-        {
-            throw new NotImplementedException();
+            await _productRepository.CreateProduct(userId, name);
         }
 
         public Task DeleteProduct(int userId, int productId)

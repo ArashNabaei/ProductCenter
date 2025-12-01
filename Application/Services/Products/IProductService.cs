@@ -12,9 +12,7 @@ namespace Application.Services.Products
 
         List<ProductDto> GetProducts();
 
-        Task<List<ProductDto>> GetProductsFilteredByUser(int userId);
-
-        Task CreateProduct(int userId, string name);
+        Task CreateProduct(int userId, string productName);
 
         Task DeleteProduct(int userId, int productId);
 
