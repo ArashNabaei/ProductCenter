@@ -1,4 +1,5 @@
 ﻿
+using Application.Features.Products.Commands.Create;
 using Application.Features.Users.Commands;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,8 @@ namespace Application.Extensions
         {
             services.AddTransient<IValidator<SignUpCommand>, SignUpCommandValidator>();
             services.AddTransient<IValidator<SignInCommand>,  SignInCommandValidator>();
+            services.AddTransient<IValidator<CreateProductCommand>, CreateProductCommandValidator>();
+
 
             return services;
         }
