@@ -12,5 +12,6 @@ namespace Application.Services.Accounts
 
         Task<AccountDto> GetUserByUsernameAndPassword(string username, string password);
 
+        Task<int> ValidateUser(string username, string password);
     }
 }
