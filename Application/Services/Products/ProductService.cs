@@ -1,5 +1,6 @@
 ﻿
 using Application.Dtos;
+using AutoMapper;
 using Domain.Repositories;
 
 namespace Application.Services.Products
@@ -9,9 +10,12 @@ namespace Application.Services.Products
 
         private readonly IProductRepository _productRepository;
 
-        public ProductService(IProductRepository productRepository)
+        private readonly IMapper _mapper;
+
+        public ProductService(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
+            _mapper = mapper;
         }
 
         public async Task<ProductDto> GetProductById(int userId, int productId)
@@ -31,19 +35,13 @@ namespace Application.Services.Products
             return productDto;
         }
 
-        public Task CreateProduct(int userId, string name)
+        public async Task<List<ProductDto>> GetProducts(int userId)
         {
-            throw new NotImplementedException();
-        }
+            var products = await _productRepository.GetProducts(userId);
 
-        public Task DeleteProduct(int userId, int productId)
-        {
-            throw new NotImplementedException();
-        }
+            var productsDto =  _mapper.Map<List<ProductDto>>(products);
 
-        public Task<List<ProductDto>> GetProducts(int userId)
-        {
-            throw new NotImplementedException();
+            return productsDto;
         }
 
         public List<ProductDto> GetProducts()
@@ -52,6 +50,16 @@ namespace Application.Services.Products
         }
 
         public Task<List<ProductDto>> GetProductsFilteredByUser(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CreateProduct(int userId, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteProduct(int userId, int productId)
         {
             throw new NotImplementedException();
         }
