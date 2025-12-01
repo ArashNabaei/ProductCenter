@@ -58,9 +58,9 @@ namespace Application.Services.Products
             await _productRepository.CreateProduct(userId, name);
         }
 
-        public Task DeleteProduct(int userId, int productId)
+        public async Task DeleteProduct(int userId, int productId)
         {
-            throw new NotImplementedException();
+            await _productRepository.DeleteProduct(userId, productId);
         }
 
         public Task UpdateProduct(int userId, int productId, ProductDto productDto)
