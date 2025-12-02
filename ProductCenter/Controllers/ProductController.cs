@@ -20,7 +20,7 @@ namespace ProductCenter.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("{productId}")]
         public async Task<IActionResult> GetProductById(int productId)
         {
             var result = await _mediator.Send(new GetProductByIdQuery(UserId, productId));
@@ -36,7 +36,7 @@ namespace ProductCenter.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("user")]
         public async Task<IActionResult> GetProductsByUserId()
         {
             var result = await _mediator.Send(new GetProductsByUserIdQuery(UserId));
@@ -52,7 +52,7 @@ namespace ProductCenter.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{productId}")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
             await _mediator.Send(new DeleteProductCommand(UserId, productId));
@@ -60,7 +60,7 @@ namespace ProductCenter.Controllers
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPut("{productId}")]
         public async Task<IActionResult> UpdateProduct(int productId, ProductDto productDto)
         {
             await _mediator.Send(new UpdateProductCommand(UserId, productId, productDto));

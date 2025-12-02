@@ -1,6 +1,8 @@
 using Application.Extensions;
+using Application.Mapping;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,10 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<MappingProfile>();
+});
 
 builder.Services.AddSwaggerGen(c =>
 {
