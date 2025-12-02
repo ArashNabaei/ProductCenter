@@ -24,5 +24,13 @@ namespace ProductCenter.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetProducts()
+        {
+            var result = await _mediator.Send(new GetProductsQuery());
+
+            return Ok(result);
+        }
+
     }
 }
