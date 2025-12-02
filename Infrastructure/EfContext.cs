@@ -22,8 +22,9 @@ namespace Infrastructure
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.User)
                 .WithMany(u => u.Products)
-                .HasForeignKey(p => p.Id)
+                .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
 
             modelBuilder.Entity<User>(entity =>
             {
@@ -40,6 +41,7 @@ namespace Infrastructure
                 entity.Property(p => p.Name).HasMaxLength(50).IsRequired();
                 entity.Property(p => p.ManufacturePhone).HasMaxLength(20);
                 entity.Property(p => p.ManufactureEmail).HasMaxLength(50);
+                entity.Property(p => p.UserId).IsRequired();
 
                 entity.HasIndex(p => new { p.ManufactureEmail, p.ProduceDate })
                       .IsUnique();

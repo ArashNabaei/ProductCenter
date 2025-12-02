@@ -17,7 +17,17 @@ namespace Application.Features.Products.Commands.Delete
             _validator = validator;
         }
 
-        public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+        //public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+        //{
+        //    var validationResult = await _validator.ValidateAsync(request);
+
+        //    if (!validationResult.IsValid)
+        //        throw new ValidationException(validationResult.Errors);
+
+        //    await _productService.DeleteProduct(request.UserId, request.ProductId);
+        //}
+
+        async Task<Unit> IRequestHandler<DeleteProductCommand, Unit>.Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
             var validationResult = await _validator.ValidateAsync(request);
 
@@ -25,7 +35,8 @@ namespace Application.Features.Products.Commands.Delete
                 throw new ValidationException(validationResult.Errors);
 
             await _productService.DeleteProduct(request.UserId, request.ProductId);
-        }
 
+            return Unit.Value;
+        }
     }
 }

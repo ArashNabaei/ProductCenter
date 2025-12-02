@@ -17,7 +17,17 @@ namespace Application.Features.Products.Commands.Update
             _validator = validator;
         }
 
-        public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        //public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        //{
+        //    var validationResult = await _validator.ValidateAsync(request);
+
+        //    if (!validationResult.IsValid)
+        //        throw new ValidationException(validationResult.Errors);
+
+        //    await _productService.UpdateProduct(request.UserId, request.ProductId, request.ProductDto);
+        //}
+
+        async Task<Unit> IRequestHandler<UpdateProductCommand, Unit>.Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var validationResult = await _validator.ValidateAsync(request);
 
@@ -25,7 +35,8 @@ namespace Application.Features.Products.Commands.Update
                 throw new ValidationException(validationResult.Errors);
 
             await _productService.UpdateProduct(request.UserId, request.ProductId, request.ProductDto);
-        }
 
+            return Unit.Value;
+        }
     }
 }

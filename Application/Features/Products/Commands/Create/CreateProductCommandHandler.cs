@@ -16,7 +16,17 @@ namespace Application.Features.Products.Commands.Create
             _validator = validator;
         }
 
-        public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        //public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        //{
+        //    var validationResult = await _validator.ValidateAsync(request);
+
+        //    if (!validationResult.IsValid)
+        //        throw new ValidationException(validationResult.Errors);
+
+        //    await _productService.CreateProduct(request.UserId, request.ProductName);
+        //}
+
+        async Task<Unit> IRequestHandler<CreateProductCommand, Unit>.Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var validationResult = await _validator.ValidateAsync(request);
 
@@ -24,7 +34,8 @@ namespace Application.Features.Products.Commands.Create
                 throw new ValidationException(validationResult.Errors);
 
             await _productService.CreateProduct(request.UserId, request.ProductName);
-        }
 
+            return Unit.Value;
+        }
     }
 }

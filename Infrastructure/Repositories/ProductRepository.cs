@@ -52,9 +52,8 @@ namespace Infrastructure.Repositories
             {
                Name = name,
                ProduceDate = DateTime.UtcNow,
+               UserId = userId,
             };
-
-            product.User.Id = userId;
 
             await _efcontext.Products.AddAsync(product);
             await _efcontext.SaveChangesAsync();

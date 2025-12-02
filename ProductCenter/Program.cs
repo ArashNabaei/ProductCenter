@@ -1,8 +1,9 @@
 using Application.Extensions;
+using Application.Features.Users.Commands;
 using Application.Mapping;
 using Infrastructure;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddValidators();
+builder.Services.AddMediatR(typeof(SignInCommandHandler).Assembly);
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<MappingProfile>();
@@ -19,7 +22,7 @@ builder.Services.AddAutoMapper(cfg =>
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "my-social-media", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Product-Center", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,

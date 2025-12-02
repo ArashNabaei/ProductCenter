@@ -19,11 +19,27 @@ namespace Application.Features.Users.Commands
             _validator = validator;
         }
 
-        public async Task Handle(SignUpCommand request, CancellationToken cancellationToken)
+        //public async Task Handle(SignUpCommand request, CancellationToken cancellationToken)
+        //{
+        //    var validationResult = await _validator.ValidateAsync(request);
+
+        //    if(!validationResult.IsValid)
+        //        throw new ValidationException(validationResult.Errors);
+
+        //    var accountDto = new AccountDto
+        //    {
+        //        Username = request.Username,
+        //        Password = request.Password,
+        //    };
+
+        //    await _accountService.CreateUser(accountDto);
+        //}
+
+        async Task<Unit> IRequestHandler<SignUpCommand, Unit>.Handle(SignUpCommand request, CancellationToken cancellationToken)
         {
             var validationResult = await _validator.ValidateAsync(request);
 
-            if(!validationResult.IsValid)
+            if (!validationResult.IsValid)
                 throw new ValidationException(validationResult.Errors);
 
             var accountDto = new AccountDto
@@ -33,6 +49,8 @@ namespace Application.Features.Users.Commands
             };
 
             await _accountService.CreateUser(accountDto);
+
+            return Unit.Value;
         }
     }
 }
