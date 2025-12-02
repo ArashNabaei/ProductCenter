@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories
 
         public async Task<Product> GetProductById(int userId, int ProductId)
         {
-            var product = await _efcontext.Products.FirstOrDefaultAsync(p => p.Id == ProductId && p.User.Id == userId);
+            var product = await _efcontext.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == ProductId && p.User.Id == userId);
 
             if (product == null)
                 throw new Exception("There is no product with this information.");
