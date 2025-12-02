@@ -20,7 +20,7 @@ namespace Application.Features.Users.Commands
 
         public async Task<string> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
-            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+            var validationResult = await _validator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
                 throw new ValidationException(validationResult.Errors);
