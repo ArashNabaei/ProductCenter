@@ -37,9 +37,9 @@ namespace ProductCenter.Controllers
         }
 
         [HttpGet("user")]
-        public async Task<IActionResult> GetProductsByUserId()
+        public async Task<IActionResult> GetProductsByUserId(int userId)
         {
-            var result = await _mediator.Send(new GetProductsByUserIdQuery(UserId));
+            var result = await _mediator.Send(new GetProductsByUserIdQuery(userId));
 
             return Ok(result);
         }
