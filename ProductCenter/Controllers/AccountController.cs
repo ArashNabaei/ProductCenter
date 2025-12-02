@@ -20,10 +20,17 @@ namespace ProductCenter.Controllers
         public async Task<IActionResult> SignUp(SignUpCommand command)
         {
             await _mediator.Send(command);
+
             return Ok("User registered successfully.");
         }
 
+        [HttpPost("signin")]
+        public async Task<IActionResult> SignIn(SignInCommand command)
+        {
+            var token = await _mediator.Send(command);
 
+            return Ok(new { token });
+        }
 
     }
 }
