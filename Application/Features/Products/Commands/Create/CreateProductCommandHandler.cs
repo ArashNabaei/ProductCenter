@@ -1,4 +1,5 @@
 ﻿using Application.Services.Products;
+using FluentValidation;
 using MediatR;
 
 namespace Application.Features.Products.Commands.Create
@@ -7,13 +8,21 @@ namespace Application.Features.Products.Commands.Create
     {
         private readonly IProductService _productService;
 
-        public CreateProductCommandHandler(IProductService productService)
+        private readonly IValidator<CreateProductCommand> _validator;
+
+        public CreateProductCommandHandler(IProductService productService, IValidator<CreateProductCommand> validator)
         {
             _productService = productService;
+            _validator = validator;
         }
 
         public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
+            var validationResult = await _validator.ValidateAsync(request);
+
+            if (!validationResult.IsValid)
+                throw new ValidationException(validationResult.Errors);
+
             await _productService.CreateProduct(request.UserId, request.ProductName);
         }
 
