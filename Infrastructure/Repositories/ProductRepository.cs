@@ -39,13 +39,6 @@ namespace Infrastructure.Repositories
             return products;
         }
 
-        public async Task<List<Product>> GetProductsFilteredByUser(int userId)
-        {
-            var products = await _efcontext.Products.AsNoTracking().Where(p => p.User.Id == userId).ToListAsync();
-
-            return products;
-        }
-
         public async Task CreateProduct(int userId, string name)
         {
             var product = new Product
