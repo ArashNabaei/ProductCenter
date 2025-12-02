@@ -1,5 +1,6 @@
 ﻿
 using Application.Services.Accounts;
+using FluentValidation;
 using MediatR;
 
 namespace Application.Features.Users.Commands
@@ -9,13 +10,21 @@ namespace Application.Features.Users.Commands
 
         private readonly IAccountService _accountService;
 
-        public SignInCommandHandler(IAccountService accountService)
+        private readonly IValidator<SignInCommand> _validator;
+
+        public SignInCommandHandler(IAccountService accountService, IValidator<SignInCommand> validator)
         {
             _accountService = accountService;
+            _validator = validator;
         }
 
         public async Task<string> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
+            var validationResult = await _validator.ValidateAsync(request);
+
+            if (!validationResult.IsValid)
+                throw new ValidationException(validationResult.Errors);
+
             var userId = await _accountService.ValidateUser(request.Username, request.Password);
 
             var token =  _accountService.GenerateToken(userId);
