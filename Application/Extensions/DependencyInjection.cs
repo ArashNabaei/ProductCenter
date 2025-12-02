@@ -6,6 +6,7 @@ using Infrastructure;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Extensions
 {
@@ -24,7 +25,8 @@ namespace Application.Extensions
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
 
-            services.AddScoped<EfContext>();
+            services.AddDbContext<EfContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             return services;
         }
