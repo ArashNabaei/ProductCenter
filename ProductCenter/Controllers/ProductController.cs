@@ -20,7 +20,7 @@ namespace ProductCenter.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{productId}")]
+        [HttpGet("GetProductsById")]
         public async Task<IActionResult> GetProductById(int productId)
         {
             var result = await _mediator.Send(new GetProductByIdQuery(UserId, productId));
@@ -28,7 +28,7 @@ namespace ProductCenter.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("GetAllProducts")]
         public async Task<IActionResult> GetProducts()
         {
             var result = await _mediator.Send(new GetProductsQuery());
@@ -36,7 +36,7 @@ namespace ProductCenter.Controllers
             return Ok(result);
         }
 
-        [HttpGet("user")]
+        [HttpGet("GetProductsFilteredByUser")]
         public async Task<IActionResult> GetProductsByUserId(int userId)
         {
             var result = await _mediator.Send(new GetProductsByUserIdQuery(userId));
@@ -44,7 +44,7 @@ namespace ProductCenter.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("CreateProduct")]
         public async Task<IActionResult> CreateProduct(string productName)
         {
             await _mediator.Send(new CreateProductCommand(UserId, productName));
@@ -52,7 +52,7 @@ namespace ProductCenter.Controllers
             return Ok();
         }
 
-        [HttpDelete("{productId}")]
+        [HttpDelete("DeleteProduct")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
             await _mediator.Send(new DeleteProductCommand(UserId, productId));
@@ -60,7 +60,7 @@ namespace ProductCenter.Controllers
             return Ok();
         }
 
-        [HttpPut("{productId}")]
+        [HttpPut("UpdateProduct")]
         public async Task<IActionResult> UpdateProduct(int productId, ProductDto productDto)
         {
             await _mediator.Send(new UpdateProductCommand(UserId, productId, productDto));
