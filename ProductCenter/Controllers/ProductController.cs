@@ -1,4 +1,5 @@
 ﻿using Application.Features.Products.Commands.Create;
+using Application.Features.Products.Commands.Delete;
 using Application.Features.Products.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,14 @@ namespace ProductCenter.Controllers
         public async Task<IActionResult> CreateProduct(string productName)
         {
             await _mediator.Send(new CreateProductCommand(UserId, productName));
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProduct(int productId)
+        {
+            await _mediator.Send(new DeleteProductCommand(UserId, productId));
 
             return Ok();
         }
