@@ -1,4 +1,6 @@
 using Application.Extensions;
+using Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +38,12 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<EfContext>();
+    db.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
