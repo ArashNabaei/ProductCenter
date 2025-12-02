@@ -1,4 +1,5 @@
-﻿using Application.Features.Products.Queries;
+﻿using Application.Features.Products.Commands.Create;
+using Application.Features.Products.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,9 +36,17 @@ namespace ProductCenter.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProductsByUserId()
         {
-            var result = await _mediator.Send(new GetProductsByUserIdQuery(UserId);
+            var result = await _mediator.Send(new GetProductsByUserIdQuery(UserId));
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(string productName)
+        {
+            await _mediator.Send(new CreateProductCommand(UserId, productName));
+
+            return Ok();
         }
 
     }
