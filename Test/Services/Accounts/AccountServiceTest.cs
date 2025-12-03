@@ -36,5 +36,18 @@ namespace Test.Services.Accounts
             Assert.Equal(1002, exception.Code);
         }
 
+        [Fact]
+        public async Task ValidateUser_WithValidCredentials_ShouldReturnsUserId()
+        {
+            var user = AccountMocks.ValidUser();
+
+            _accountRepository.Setup(r => r.GetUserByUsernameAndPassword(user.Username, user.Password))
+                              .ReturnsAsync(user);
+
+            var result = await _accountService.ValidateUser(user.Username, user.Password);
+
+            Assert.Equal(user.Id, result);
+        }
+
     }
 }
