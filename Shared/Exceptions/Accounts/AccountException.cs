@@ -14,5 +14,10 @@ namespace Shared.Exceptions.Accounts
             return new AccountException(1001, "User already exists.");
         }
 
+        public static AccountException UserNotFound()
+        {
+            return new AccountException(1002, "User was not found.");
+        }
+
     }
 }
