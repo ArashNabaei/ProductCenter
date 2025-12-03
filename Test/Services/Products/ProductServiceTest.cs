@@ -124,5 +124,18 @@ namespace Test.Services.Products
             Assert.Equal("Product", result.First().Name);
         }
 
+        [Fact]
+        public async Task GetProducts_WhenNoneFound_ShouldThrowNoProductsFoundException()
+        {
+            _productRepository.Setup(r => r.GetProducts())
+                .ReturnsAsync((List<Product>?)null);
+
+            var exception = await Assert.ThrowsAsync<ProductException>(
+                () => _productService.GetProducts()
+            );
+
+            Assert.Equal(2003, exception.Code);
+        }
+
     }
 }
