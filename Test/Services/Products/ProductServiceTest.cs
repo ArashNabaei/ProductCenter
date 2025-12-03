@@ -103,5 +103,26 @@ namespace Test.Services.Products
             Assert.Equal(2003, exception.Code);
         }
 
+        [Fact]
+        public async Task GetProducts_WhenProductsExist_ShouldReturnProductDtos()
+        {
+            var products = ProductMocks.Products();
+
+            var productDtos = ProductMocks.ProductDtos();
+
+            _productRepository.Setup(r => r.GetProducts())
+                .ReturnsAsync(products);
+
+            _mapper.Setup(m => m.Map<List<ProductDto>>(products))
+                .Returns(productDtos);
+
+            var result = await _productService.GetProducts();
+
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Equal(1, result.First().Id);
+            Assert.Equal("Product", result.First().Name);
+        }
+
     }
 }
