@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Features.Products.Queries
 {
-    public class GetProductsByUserIdQueryHandler : IRequestHandler<GetProductsByUserIdQuery, List<ProductDto>>
+    public class GetProductsByUserIdQueryHandler : IRequestHandler<GetProductsByUserIdQuery, IEnumerable<ProductDto>>
     {
 
         private readonly IProductService _productService;
@@ -16,7 +16,7 @@ namespace Application.Features.Products.Queries
         }
 
 
-        public async Task<List<ProductDto>> Handle(GetProductsByUserIdQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ProductDto>> Handle(GetProductsByUserIdQuery request, CancellationToken cancellationToken)
         {
             var products = await _productService.GetProducts(request.UserId);
 
