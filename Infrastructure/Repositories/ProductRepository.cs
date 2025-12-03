@@ -15,24 +15,21 @@ namespace Infrastructure.Repositories
             _efcontext = efContext;
         }
 
-        public async Task<Product> GetProductById(int userId, int ProductId)
+        public async Task<Product?> GetProductById(int userId, int ProductId)
         {
             var product = await _efcontext.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == ProductId && p.User.Id == userId);
-
-            if (product == null)
-                throw new Exception("There is no product with this information.");
 
             return product;
         }
 
-        public async Task<List<Product>> GetProducts(int userId)
+        public async Task<List<Product>?> GetProducts(int userId)
         {
             var products = await _efcontext.Products.AsNoTracking().Where(p => p.User.Id == userId).ToListAsync();
 
             return products;
         }
 
-        public async Task<List<Product>> GetProducts()
+        public async Task<List<Product>?> GetProducts()
         {
             var products = await  _efcontext.Products.AsNoTracking().ToListAsync();
 
@@ -56,9 +53,6 @@ namespace Infrastructure.Repositories
         {
             var product = await _efcontext.Products.FirstOrDefaultAsync(p => p.Id == productId && p.User.Id == userId);
 
-            if (product == null)
-                throw new Exception("There is no product with this information.");
-
             _efcontext.Remove(product);
 
             await _efcontext.SaveChangesAsync();
@@ -67,9 +61,6 @@ namespace Infrastructure.Repositories
         public async Task UpdateProduct(int userId, int productId, Product product)
         {
             var existingProduct = await _efcontext.Products.FirstOrDefaultAsync(p => p.User.Id == userId && p.Id == productId);
-
-            if (existingProduct == null)
-                throw new Exception("There is no product with this information.");
 
             existingProduct.Name = product.Name;
             existingProduct.ManufacturePhone = product.ManufacturePhone;

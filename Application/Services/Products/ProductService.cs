@@ -3,6 +3,7 @@ using Application.Dtos;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Repositories;
+using Shared.Exceptions.Products;
 
 namespace Application.Services.Products
 {
@@ -23,6 +24,9 @@ namespace Application.Services.Products
         {
             var product = await _productRepository.GetProductById(userId, productId);
 
+            if (product == null)
+                throw ProductException.ProductNotFound();
+
             var productDto = new ProductDto
             {
                 Id = product.Id,
@@ -40,6 +44,9 @@ namespace Application.Services.Products
         {
             var products = await _productRepository.GetProducts(userId);
 
+            if (products == null)
+                throw ProductException.NoProductsFound();
+
             var productsDto =  _mapper.Map<List<ProductDto>>(products);
 
             return productsDto;
@@ -48,6 +55,9 @@ namespace Application.Services.Products
         public async Task<List<ProductDto>> GetProducts()
         {
             var products = await _productRepository.GetProducts();
+
+            if (products == null)
+                throw ProductException.NoProductsFound();
 
             var productsDto = _mapper.Map<List<ProductDto>>(products);
 
