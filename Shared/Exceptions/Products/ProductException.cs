@@ -21,7 +21,7 @@ namespace Shared.Exceptions.Products
 
         public static ProductException NoProductsFound()
         {
-            return new ProductException(2003, "No products found for this user.");
+            return new ProductException(2003, "No products found.");
         }
 
     }
