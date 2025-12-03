@@ -1,5 +1,7 @@
 ﻿
+using Application.Dtos;
 using Application.Services.Products;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Repositories;
 using Moq;
@@ -15,11 +17,15 @@ namespace Test.Services.Products
 
         private readonly IProductService _productService;
 
+        private readonly Mock<IMapper> _mapper;
+
         public ProductServiceTest()
         {
             _productRepository = new Mock<IProductRepository>();
+            _mapper = new Mock<IMapper>();
+
             _productService = new ProductService(_productRepository.Object,
-                null);
+                _mapper.Object);
         }
 
         [Fact]
@@ -57,6 +63,29 @@ namespace Test.Services.Products
             );
 
             Assert.Equal(2001, exception.Code);
+        }
+
+        [Fact]
+        public async Task GetProducts_ByUser_WhenProductsExist_ShouldReturnProducts()
+        {
+            int userId = 1;
+
+            var products = ProductMocks.Products();
+
+            var prodcutDtos = ProductMocks.ProductDtos();
+
+            _productRepository.Setup(r => r.GetProducts(userId))
+                .ReturnsAsync(products);
+
+            _mapper.Setup(m => m.Map<List<ProductDto>>(products))
+                .Returns(prodcutDtos);
+
+            var result = await _productService.GetProducts(userId);
+
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Equal(prodcutDtos.First().Id, result.First().Id);
+            Assert.Equal(prodcutDtos.First().Name, result.First().Name);
         }
 
     }

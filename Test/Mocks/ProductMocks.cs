@@ -1,4 +1,5 @@
 ﻿
+using Application.Dtos;
 using Domain.Entities;
 
 namespace Test.Mocks
@@ -33,6 +34,30 @@ namespace Test.Mocks
             {
                 Id = 1,
                 Name = "ExistingProductName",
+            };
+        }
+
+        public static List<Product> Products()
+        {
+            return new List<Product>
+            {
+                new Product
+                {
+                    Id=1,
+                    Name = "Product",
+                }
+            };
+        }
+
+        public static List<ProductDto> ProductDtos()
+        {
+            return new List<ProductDto>
+            {
+                new ProductDto
+                {
+                    Id = 1,
+                    Name = "Product"
+                }
             };
         }
 
