@@ -14,5 +14,12 @@ namespace Shared.Exceptions.Products
             return new ProductException(2001, "Product was not found.");
         }
 
+        public static ProductException ProductAlreadyExists()
+        {
+            return new ProductException(2002, "Product already exists.");
+        }
+
+
+
     }
 }
