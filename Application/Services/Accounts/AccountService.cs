@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Exceptions.Accounts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -34,7 +35,7 @@ namespace Application.Services.Accounts
             var existingUser = await _accountRepository.GetUserByUsernameAndPassword(username, password);
 
             if (existingUser != null)
-                throw new Exception("There is a user with same information.");
+                throw AccountException.UserAlreadyExists();
 
             await _accountRepository.CreateUser(username, password);
         }
@@ -63,6 +64,9 @@ namespace Application.Services.Accounts
         {
             var user = await _accountRepository.GetUserByUsernameAndPassword(username, password);
 
+            if (user == null)
+                throw AccountException.UserNotFound();
+
             var userDto = _mapper.Map<AccountDto> (user);
 
             return userDto;
@@ -73,7 +77,7 @@ namespace Application.Services.Accounts
             var user = await _accountRepository.GetUserByUsernameAndPassword(username, password);
 
             if (user == null)
-                throw new Exception("There is no user with with these information.");
+                throw AccountException.UserNotFound();
 
             return user.Id;
         }
