@@ -88,5 +88,20 @@ namespace Test.Services.Products
             Assert.Equal(prodcutDtos.First().Name, result.First().Name);
         }
 
+        [Fact]
+        public async Task GetProducts_ByUser_WhenNoneFound_ShouldThrowNoProductsFoundException()
+        {
+            int userId = 1;
+
+            _productRepository.Setup(r => r.GetProducts(userId))
+                .ReturnsAsync((List<Product>?)null);
+
+            var exception = await Assert.ThrowsAsync<ProductException>(
+                () => _productService.GetProducts(userId)
+            );
+
+            Assert.Equal(2003, exception.Code);
+        }
+
     }
 }
