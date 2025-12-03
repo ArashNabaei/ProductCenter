@@ -1,4 +1,5 @@
 ﻿
+using Application.Dtos;
 using Application.Services.Accounts;
 using Domain.Entities;
 using Domain.Repositories;
@@ -47,6 +48,23 @@ namespace Test.Services.Accounts
             var result = await _accountService.ValidateUser(user.Username, user.Password);
 
             Assert.Equal(user.Id, result);
+        }
+
+        [Fact]
+        public async Task CreateUser_WithExistingUser_ShouldThrowsUserAlreadyExistsException()
+        {
+            var userDto = new AccountDto { Username = "ExistingUsername", Password = "ExistingPassword" };
+
+            var user = AccountMocks.ExistingUser();
+
+            _accountRepository.Setup(r => r.GetUserByUsernameAndPassword(userDto.Username, userDto.Password))
+                              .ReturnsAsync(user);
+
+            var exception = await Assert.ThrowsAsync<AccountException>(() => _accountService.CreateUser(userDto));
+
+            Assert.Equal(1001, exception.Code);
+
+            _accountRepository.Verify(r => r.CreateUser(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         }
 
     }
