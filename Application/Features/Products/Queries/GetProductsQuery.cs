@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Features.Products.Queries
 {
-    public record GetProductsQuery() : IRequest<List<ProductDto>>
+    public record GetProductsQuery() : IRequest<IEnumerable<ProductDto>>
     {
     }
 }
