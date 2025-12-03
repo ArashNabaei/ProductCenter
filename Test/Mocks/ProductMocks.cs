@@ -12,6 +12,9 @@ namespace Test.Mocks
             {
                 Id = 1,
                 Name = "ValidProductName",
+                ManufacturePhone = "ValidManufacturePhone",
+                ManufactureEmail = "ValidManufactureEmail",
+                IsAvailable = true,
             };
         }
 
