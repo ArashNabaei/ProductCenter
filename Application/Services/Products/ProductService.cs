@@ -71,14 +71,25 @@ namespace Application.Services.Products
 
         public async Task DeleteProduct(int userId, int productId)
         {
+            var existingProduct = await _productRepository.GetProductById(userId, productId);
+            
+            if (existingProduct == null)
+                throw ProductException.ProductNotFound();
+
             await _productRepository.DeleteProduct(userId, productId);
         }
 
         public async Task UpdateProduct(int userId, int productId, ProductDto productDto)
         {
-            var product = _mapper.Map<Product>(productDto);
+            var existingProduct = await _productRepository.GetProductById(userId, productId);
+            
+            if (existingProduct == null)
+                throw ProductException.ProductNotFound();
 
-            await _productRepository.UpdateProduct(userId, productId, product);
+            _mapper.Map(productDto, existingProduct);
+
+            await _productRepository.UpdateProduct(userId, productId, existingProduct);
         }
+
     }
 }
