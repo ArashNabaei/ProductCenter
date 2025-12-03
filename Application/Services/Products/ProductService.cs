@@ -40,7 +40,7 @@ namespace Application.Services.Products
             return productDto;
         }
 
-        public async Task<List<ProductDto>> GetProducts(int userId)
+        public async Task<IEnumerable<ProductDto>> GetProducts(int userId)
         {
             var products = await _productRepository.GetProducts(userId);
 
@@ -52,7 +52,7 @@ namespace Application.Services.Products
             return productsDto;
         }
 
-        public async Task<List<ProductDto>> GetProducts()
+        public async Task<IEnumerable<ProductDto>> GetProducts()
         {
             var products = await _productRepository.GetProducts();
 

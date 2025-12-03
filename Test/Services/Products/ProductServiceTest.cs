@@ -77,7 +77,7 @@ namespace Test.Services.Products
             _productRepository.Setup(r => r.GetProducts(userId))
                 .ReturnsAsync(products);
 
-            _mapper.Setup(m => m.Map<List<ProductDto>>(products))
+            _mapper.Setup(m => m.Map<IEnumerable<ProductDto>>(products))
                 .Returns(prodcutDtos);
 
             var result = await _productService.GetProducts(userId);
@@ -113,7 +113,7 @@ namespace Test.Services.Products
             _productRepository.Setup(r => r.GetProducts())
                 .ReturnsAsync(products);
 
-            _mapper.Setup(m => m.Map<List<ProductDto>>(products))
+            _mapper.Setup(m => m.Map<IEnumerable<ProductDto>>(products))
                 .Returns(productDtos);
 
             var result = await _productService.GetProducts();
