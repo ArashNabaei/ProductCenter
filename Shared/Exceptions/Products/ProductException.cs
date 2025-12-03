@@ -19,7 +19,10 @@ namespace Shared.Exceptions.Products
             return new ProductException(2002, "Product already exists.");
         }
 
-
+        public static ProductException NoProductsFound()
+        {
+            return new ProductException(2003, "No products found for this user.");
+        }
 
     }
 }
